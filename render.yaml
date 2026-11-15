@@ -1,0 +1,38 @@
+services:
+  - type: web
+    name: nasa-earth-observatory
+    runtime: python
+    plan: free
+    buildCommand: ./build.sh
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DJANGO_DEBUG
+        value: "0"
+      - key: DJANGO_ALLOWED_HOSTS
+        value: ".onrender.com"
+      - key: DJANGO_BEHIND_PROXY
+        value: "1"
+      - key: PUBLIC_DEMO
+        value: "1"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: nasa-earth-db
+          property: connectionString
+      - key: NASA_EARTHDATA_TOKEN
+        sync: false
+      - key: FAO_API_KEY
+        sync: false
+      - key: NASA_POWER_TIMEOUT
+        value: "45"
+      - key: NASA_CMR_TIMEOUT
+        value: "45"
+      - key: FAO_TIMEOUT
+        value: "30"
+
+databases:
+  - name: nasa-earth-db
+    plan: free
+    databaseName: nasa_earth
+    user: nasa_earth

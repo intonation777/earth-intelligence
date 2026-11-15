@@ -1,0 +1,614 @@
+{% load static %}
+<!doctype html><html lang="fa" dir="rtl"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#10243a"><meta name="description" content="سامانه مشاوره و داده‌های کشاورزی و اقلیمی بر پایه NASA POWER، FAOSTAT و Earthdata"><title>NASA Earth & Climate Observatory</title><link rel="preconnect" href="https://unpkg.com"><link rel="preconnect" href="https://cdn.jsdelivr.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"><link rel="stylesheet" href="{% static 'shared/tokens.css' %}?v=1"><link rel="stylesheet" href="{% static 'core/app.css' %}?v=26"></head><body>
+<a class="skip-link" href="#mainContent" data-i18n="skip_link">پرش به محتوای اصلی</a>
+<header class="topbar">
+<div class="brand">
+<div class="brand-mark">N</div>
+<div>
+<strong>NASA EARTH OBSERVATORY</strong>
+<small data-i18n="subtitle">سامانه یکپارچه داده‌های زمین و اقلیم</small>
+</div>
+</div>
+<div class="top-actions">
+<span class="today-badge" id="todayBadge"></span>
+<span class="live-dot" data-i18n="live">اتصال زنده به منابع ناسا</span>
+<button id="themeBtn" class="btn btn-ghost" type="button" aria-label="تغییر حالت روشن/تیره" data-i18n-aria="theme_aria">🌙</button>
+<button id="langBtn" class="btn btn-ghost">English</button>
+</div>
+</header>
+<div class="shell">
+<aside class="sidebar">
+<div class="side-label" data-i18n="workspace">فضای کاری</div>
+<button class="nav active" data-tab="overview">◫ 
+<span data-i18n="overview">نمای کلی</span>
+</button>
+<button class="nav" data-tab="advisor">💡 
+<span data-i18n="nav_advisor">مشاور کشاورز</span>
+</button>
+<button class="nav" data-tab="climate">🌍 
+<span data-i18n="nav_climate">موتور اقلیم</span>
+</button>
+<button class="nav" data-tab="agent">🤖 
+<span data-i18n="nav_agent">دستیار هوشمند</span>
+</button>
+<button class="nav" data-tab="power">◉ 
+<span>NASA POWER</span>
+</button>
+<button class="nav" data-tab="fao">🌱 
+<span data-i18n="nav_fao">FAO کشاورزی</span>
+</button>
+<button class="nav" data-tab="catalog">⌕ 
+<span data-i18n="catalog">کاتالوگ Earthdata</span>
+</button>
+<button class="nav" data-tab="faq">? 
+<span data-i18n="faq">دانشنامه و FAQ</span>
+</button>
+<button class="nav" data-tab="workspace">🧪
+<span data-i18n="workspace">فضای کاری علمی</span>
+</button>
+<div class="side-note">
+<b data-i18n="data_note_title">درباره داده‌ها</b>
+<p data-i18n="data_note">این برنامه کاتالوگ ناسا را جست‌وجو می‌کند و داده‌های انتخابی را دریافت می‌کند؛ آرشیو کامل را یک‌جا دانلود نمی‌کند.</p>
+</div>
+<div class="side-footer">CMR · POWER · SMAP · MODIS</div>
+</aside>
+<main class="main" id="mainContent">
+<div id="scientificGuide" class="scientific-guide" role="region" aria-live="polite" aria-label="راهنمای محیط علمی" data-i18n-aria="scientific_guide_aria">
+  <div class="scientific-guide-mark">⌁</div>
+  <div class="scientific-guide-copy"><strong data-i18n="guide_start_title">از هدف خود شروع کنید</strong><span data-i18n="guide_start_desc">موقعیت را انتخاب کنید، نوع تحلیل را مشخص کنید و سپس منبع و بازه زمانی داده را بررسی کنید.</span></div>
+  <div class="scientific-guide-actions"><button class="guide-action" type="button" data-go="climate" data-i18n="guide_go_climate">تحلیل اقلیم</button><button class="guide-action" type="button" data-go="catalog" data-i18n="guide_go_data">کشف داده</button></div>
+</div>
+<section class="hero">
+<div>
+<div class="eyebrow" data-i18n="hero_eyebrow">EARTH DATA · CLIMATE INTELLIGENCE</div>
+<h1 data-i18n="hero_title">زمین را با داده‌های واقعی بشناسید</h1>
+<p data-i18n="hero_desc">جست‌وجو، دریافت و تحلیل داده‌های اقلیمی و ماهواره‌ای ناسا در یک محیط یکپارچه.</p>
+<button class="btn btn-primary" data-go="advisor" style="margin-top:14px" data-i18n="hero_cta">💡 مشاور هوشمند کشاورز ←</button>
+</div>
+<div class="hero-orb">NASA<br>
+<span>EARTH</span>
+</div>
+</section>
+<section id="tab-overview" class="tab-panel">
+<div class="section-head">
+<div>
+<h2 data-i18n="overview_title">مرکز پایش زمین</h2>
+<p data-i18n="overview_desc">مختصات را انتخاب کنید یا روی نقشه کلیک کنید.</p>
+</div>
+<span class="pill">LIVE DATA</span>
+</div>
+<div class="stats-grid">
+<article class="stat">
+<span data-i18n="stat_power">سرویس اقلیمی</span>
+<b>NASA POWER</b>
+<small data-i18n="stat_power_sub">داده روزانه و تاریخی</small>
+</article>
+<article class="stat">
+<span data-i18n="stat_smap">رطوبت خاک</span>
+<b>SMAP</b>
+<small data-i18n="stat_smap_sub">جست‌وجوی محصول و گرانول</small>
+</article>
+<article class="stat">
+<span data-i18n="stat_modis">سنجش‌ازدور</span>
+<b>MODIS</b>
+<small data-i18n="stat_modis_sub">پوشش گیاهی و سطح زمین</small>
+</article>
+<article class="stat">
+<span data-i18n="stat_archive">آرشیو داده</span>
+<b>Earthdata CMR</b>
+<small data-i18n="stat_archive_sub">کاتالوگ جهانی ناسا</small>
+</article>
+</div>
+<div class="grid-two">
+<div class="panel">
+<div class="panel-title">
+<div>
+<h3 data-i18n="location_title">موقعیت مورد مطالعه</h3>
+<p data-i18n="location_sub">برای تعیین مختصات، روی نقشه کلیک کنید.</p>
+</div>
+<span class="tiny-tag">WGS84</span>
+</div>
+<svg id="coordMap" viewBox="0 0 360 180" preserveAspectRatio="none" role="img" aria-label="نقشه مختصات جغرافیایی — برای انتخاب موقعیت کلیک کنید"></svg>
+<div class="map-hint" data-i18n="map_hint">🖱 روی نقشه کلیک کنید یا مختصات را وارد کنید</div>
+<div class="geo-search">
+<input id="geoQuery" placeholder="🔍 جست‌وجوی شهر، روستا یا مزرعه در سراسر جهان..." autocomplete="off" data-i18n-placeholder="geo_ph">
+<button class="btn btn-primary" id="geoSearch" type="button" data-i18n="search">جست‌وجو</button>
+</div>
+<div id="geoResults"></div>
+<div class="coord-row">
+<label>LAT 
+<input id="lat" type="number" step="0.0001" value="32.0853"></label>
+<label>LON 
+<input id="lon" type="number" step="0.0001" value="34.7818"></label>
+<button class="btn btn-primary" id="useLocation" data-i18n="use_location">استفاده از مختصات</button>
+<button class="btn btn-ghost" id="myLocation" type="button" data-i18n="my_location">📍 موقعیت من</button>
+</div>
+</div>
+<div class="panel">
+<div class="panel-title">
+<div>
+<h3 data-i18n="quick_power">دریافت سریع داده اقلیمی</h3>
+<p data-i18n="quick_power_sub">نمونه‌ای از داده‌های روزانه NASA POWER</p>
+</div>
+<span class="tiny-tag">POWER API</span>
+</div>
+<div class="form-grid">
+<label>
+<span data-i18n="from">از تاریخ</span>
+<input id="start" type="date" value="2026-10-01"></label>
+<label>
+<span data-i18n="to">تا تاریخ</span>
+<input id="end" type="date" value="2026-10-31"></label>
+</div>
+<div class="quick-searches" id="rangePresets" style="margin:8px 0 0">
+<button class="btn btn-ghost" data-days="7" data-i18n="days7">۷ روز گذشته</button>
+<button class="btn btn-ghost" data-days="30" data-i18n="days30">۳۰ روز گذشته</button>
+<button class="btn btn-ghost" data-days="90" data-i18n="days90">۹۰ روز گذشته</button>
+</div>
+<div class="form-grid">
+<label>
+<span data-i18n="temporal">تفکیک زمانی</span>
+<select id="temporal">
+<option value="daily">Daily · روزانه</option>
+<option value="hourly">Hourly · ساعتی</option>
+<option value="monthly">Monthly · ماهانه</option>
+<option value="climatology">Climatology · اقلیم‌شناسی</option>
+</select>
+</label>
+<label>
+<span data-i18n="community">جامعه کاربردی</span>
+<select id="community">
+<option value="AG">AG · Agroclimatology</option>
+<option value="RE">RE · Renewable Energy</option>
+<option value="SB">SB · Sustainable Buildings</option>
+<option value="HY">HY · Hydrology</option>
+</select>
+</label>
+</div>
+<label class="field-label" data-i18n="parameters">پارامترها</label>
+<div class="checks">
+<label>
+<input type="checkbox" value="T2M" checked> دما T2M</label>
+<label>
+<input type="checkbox" value="PRECTOTCORR" checked> بارش</label>
+<label>
+<input type="checkbox" value="RH2M" checked> رطوبت</label>
+<label>
+<input type="checkbox" value="WS10M"> باد</label>
+<label>
+<input type="checkbox" value="ALLSKY_SFC_SW_DWN"> تابش خورشیدی</label>
+</div>
+<button class="btn btn-primary full" id="loadPower" data-i18n="fetch">دریافت داده از ناسا</button>
+<div id="powerStatus" class="status" aria-live="polite" data-i18n="ready">آماده دریافت داده</div>
+</div>
+</div>
+<details class="data-guide">
+<summary data-i18n="data_guide_summary">📖 راهنمای داده‌ها — هر پارامتر یعنی چه؟ (برای درک بهتر)</summary>
+<div class="guide-grid">
+<div class="guide-card">
+<b data-i18n="dg_t2m">🌡 دما (T2M)</b>
+<span data-i18n="dg_t2m_d">میانگین دمای هوا بر حسب °C — برای تصمیم‌گیری کاشت، آبیاری و مدیریت سرما.</span>
+</div>
+<div class="guide-card">
+<b data-i18n="dg_rain">🌧 بارش (PRECTOTCORR)</b>
+<span data-i18n="dg_rain_d">مجموع باران بر حسب mm — مهم‌ترین عامل برای کشاورزی دیم و برنامه‌ریزی آبیاری.</span>
+</div>
+<div class="guide-card">
+<b data-i18n="dg_rh">💧 رطوبت (RH2M)</b>
+<span data-i18n="dg_rh_d">رطوبت نسبی هوا بر حسب ٪ — برای پیش‌بینی بیماری‌های گیاهی و تبخیر.</span>
+</div>
+<div class="guide-card">
+<b data-i18n="dg_solar">☀️ تابش خورشیدی (ALLSKY_SFC_SW_DWN)</b>
+<span data-i18n="dg_solar_d">انرژی خورشید رسیده به سطح زمین بر حسب kWh/m² — برای پنل خورشیدی و رشد گیاه.</span>
+</div>
+<div class="guide-card">
+<b data-i18n="dg_wind">💨 باد (WS10M)</b>
+<span data-i18n="dg_wind_d">سرعت باد در ارتفاع ۱۰ متری بر حسب m/s — برای سم‌پاشی، برداشت و تبخیر.</span>
+</div>
+<div class="guide-card">
+<b data-i18n="dg_evap">🌫 تبخیر (EVPTRNS)</b>
+<span data-i18n="dg_evap_d">میزان تبخیر آب از سطح بر حسب mm — نشان‌دهنده نیاز آبی واقعی گیاه.</span>
+</div>
+</div>
+<div class="guide-notes">
+<p>
+<b data-i18n="dg_levels_title">سطوح زمانی:</b>
+ <span data-i18n="dg_levels">روزانه = هر روز · ساعتی = هر ساعت · ماهانه = میانگین هر ماه · اقلیمی = میانگین بلندمدت سال‌ها</span></p>
+<p>
+<b data-i18n="dg_communities_title">کدهای جامعه داده:</b>
+ <span data-i18n="dg_communities">AG = کشاورزی و اقلیم · RE = انرژی تجدیدپذیر · SB = ساختمان پایدار · HY = هیدرولوژی و آب</span></p>
+<p>
+<b data-i18n="dg_read_title">نحوه خواندن نتایج:</b>
+ <span data-i18n="dg_read">در کارت‌های «تحلیل» میانگین، کمینه، بیشینه و روند هر پارامتر با واحد آن نمایش داده می‌شود؛ فایل CSV همه مقادیر خام را دارد.</span></p>
+</div>
+</details>
+<div class="panel">
+<div class="panel-title">
+<div>
+<h3 data-i18n="gibs_title">🛰 لایه‌های ماهواره‌ای NASA GIBS</h3>
+<p data-i18n="gibs_desc">تصاویر واقعی سنجش‌ازدور — NDVI، EVI، دمای سطح زمین، رطوبت خاک SMAP. داده‌ها با تأخیر چندروزه منتشر می‌شوند.</p>
+</div>
+<span class="tiny-tag">GIBS WMTS</span>
+</div>
+<div class="form-grid">
+<label>
+<span data-i18n="layer_lbl">لایه</span>
+<select id="satLayer">
+<option value="truecolor" data-i18n="sat_opt_truecolor">تصویر واقعی Terra</option>
+<option value="ndvi" data-i18n="sat_opt_ndvi">NDVI — پوشش گیاهی</option>
+<option value="evi" data-i18n="sat_opt_evi">EVI — شاخص گیاهی پیشرفته</option>
+<option value="lst" data-i18n="sat_opt_lst">دمای سطح زمین (LST)</option>
+<option value="lst_night" data-i18n="sat_opt_lst_night">دمای سطح زمین شب</option>
+<option value="ndvi_monthly" data-i18n="sat_opt_ndvi_m">NDVI ماهانه</option>
+<option value="evi16" data-i18n="sat_opt_evi16">EVI ۱۶ روزه Aqua</option>
+<option value="smap" data-i18n="sat_opt_smap">رطوبت خاک SMAP</option>
+</select>
+</label>
+<label>
+<span data-i18n="sat_date_lbl">تاریخ داده</span>
+<input id="satDate" type="date"></label>
+</div>
+<div style="position:relative">
+<div id="satMap" aria-label="نقشه ماهواره‌ای تعاملی"></div>
+<div id="satMapBOverlay" style="position:absolute;inset:0;display:none;pointer-events:none">
+<div id="satMapB" style="width:100%;height:100%"></div>
+</div>
+<div id="satSplitDivider" style="position:absolute;top:0;bottom:0;width:3px;background:#fff;display:none;pointer-events:none;box-shadow:0 0 4px rgba(0,0,0,.5)"></div>
+</div>
+<div style="display:flex;align-items:center;gap:10px;margin-top:8px;flex-wrap:wrap">
+<label style="font-size:12px;color:var(--muted)"><span data-i18n="opacity_lbl">شفافیت:</span> 
+<input type="range" id="satOpacity" min="20" max="100" value="85" style="width:110px;vertical-align:middle"></label>
+<span id="satLegend" style="font-size:11px;color:var(--muted)"></span>
+</div>
+<div id="satStatus" class="status" aria-live="polite"></div>
+<div style="margin-top:10px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
+<label style="font-size:12px;display:flex;gap:6px;align-items:center">
+<input type="checkbox" id="satCompare"> <span data-i18n="compare_lbl">🆚 مقایسه دو تاریخ</span></label>
+<label id="satDate2Wrap" class="hidden" style="font-size:12px"><span data-i18n="date2_lbl">تاریخ دوم:</span> 
+<input type="date" id="satDate2"></label>
+</div>
+<div id="satSplitControls" class="hidden" style="margin-top:8px;display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+<label style="font-size:12px"><span data-i18n="split_lbl">تقسیم:</span> <input type="range" id="satSplit" min="0" max="100" value="50" style="width:140px;vertical-align:middle"></label>
+<label style="font-size:12px;display:flex;gap:4px;align-items:center"><input type="checkbox" id="satSplitMode" checked> Split view</label>
+<small style="font-size:11px;color:var(--muted)" data-i18n="split_hint">چپ: تاریخ اول · راست: تاریخ دوم — GIBS برای نمایش است، نه داده کمی</small>
+</div>
+</div>
+<div class="panel chart-panel">
+<div class="panel-title">
+<div>
+<h3 data-i18n="chart_title">سری زمانی داده‌های اقلیمی</h3>
+<p data-i18n="chart_sub">مقادیر خام دریافتی از NASA POWER؛ واحد هر پارامتر جداگانه نمایش داده می‌شود.</p>
+</div>
+<button class="btn btn-ghost" id="exportCsv" disabled>CSV ↓</button>
+<button class="btn btn-ghost" data-go="advisor" data-i18n="advisor_goto">💡 مشاوره برای همین نقطه</button>
+</div>
+<div class="chart-wrap">
+<div id="chartEmpty" class="empty-state" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:4;background:#fff;border-radius:12px">
+<div>
+<span class="empty-icon">📈</span>
+<p data-i18n="chart_empty">هنوز داده‌ای دریافت نشده</p>
+<p style="font-size:11px" data-i18n="chart_empty_sub">پارامترها را انتخاب کنید و «دریافت داده» را بزنید</p>
+</div>
+</div>
+<canvas id="powerChart" role="img" aria-label="نمودار سری زمانی داده‌های اقلیمی"></canvas>
+</div>
+<div id="analysis" class="analysis-grid"></div>
+<div id="powerSummaryText" class="analysis-card" style="display:none;margin-top:12px"></div>
+</div>
+</section>
+<section id="tab-climate" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2 data-i18n="climate_title">🌍 موتور هوش اقلیمی</h2>
+<p data-i18n="climate_desc">شاخص‌های علمی خشکسالی و اقلیم از داده واقعی NASA POWER — SPI، SPEI، آنومالی، امواج گرما.</p>
+</div>
+<span class="pill">CLIMATE INTELLIGENCE</span>
+</div>
+<div class="panel">
+<div class="form-grid">
+<label>
+<span data-i18n="lat_lbl">عرض جغرافیایی</span>
+<input id="climLat" type="number" step="0.0001" value="32.0853"></label>
+<label>
+<span data-i18n="lon_lbl">طول جغرافیایی</span>
+<input id="climLon" type="number" step="0.0001" value="34.7818"></label>
+<label>
+<span data-i18n="period_lbl">دوره تحلیل</span>
+<select id="climYears">
+<option value="1" data-i18n="yr1">۱ سال اخیر</option>
+<option value="3" data-i18n="yr3">۳ سال اخیر</option>
+<option value="5" selected data-i18n="yr5">۵ سال اخیر</option>
+</select>
+</label>
+</div>
+<div class="button-row" style="margin-top:14px">
+<button class="btn btn-primary" id="runClimate" data-i18n="run_climate">🔍 تحلیل اقلیمی</button>
+<button class="btn btn-ghost" id="climUseMap" type="button" data-i18n="clim_use_map">استفاده از مختصات نقشه</button>
+<button class="btn btn-ghost" id="climPdf" type="button" data-i18n="clim_pdf">📄 گزارش PDF</button>
+<button class="btn btn-ghost" id="climCsv" type="button">⬇️ CSV</button>
+</div>
+<div id="climStatus" class="status" aria-live="polite" data-i18n="clim_ready">دوره و مختصات را انتخاب کنید.</div>
+</div>
+<div id="climResult"></div>
+<details class="data-guide" style="margin-top:14px">
+<summary data-i18n="climate_methods">روش‌شناسی و منابع داده</summary>
+<div class="guide-notes">
+<p><b>SPI/SPEI:</b> <span data-i18n="clim_m1">شاخص‌های استاندارد خشکسالی هواشناختی بر اساس بارش و PET از NASA POWER — داده شبکه‌ای مدل‌شده، نه اندازه‌گیری مستقیم مزرعه.</span></p>
+<p><b>GDD:</b> <span data-i18n="clim_m2">درجه-روز رشد = تجمع (Tmax+Tmin)/2 منهای دمای پایه محصول.</span></p>
+<p><span data-i18n="clim_m3">محدودیت: دقت به کامل بودن سری زمانی POWER بستگی دارد؛ مقادیر SPI در نقاط مرزی شبکه کمتر قابل اتکا هستند.</span></p>
+<p>منبع: <a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">NASA POWER ↗</a></p>
+</div>
+</details>
+</section>
+<section id="tab-agent" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2 data-i18n="agent_tab_title">🤖 دستیار هوشمند زمین</h2>
+<p data-i18n="agent_tab_desc">سؤال خود را به زبان ساده بپرسید — موتور هوش، داده‌های واقعی را انتخاب و تحلیل می‌کند و منابع را نشان می‌دهد.</p>
+</div>
+<span class="pill">HYBRID AI</span>
+</div>
+<div class="panel">
+<div class="search-row" style="display:flex;gap:10px">
+<input id="agentQ" placeholder="مثلاً: وضعیت خشکسالی گندم در شیراز چطور است؟" style="flex:1" aria-label="سؤال علمی" data-i18n-placeholder="agent_ph">
+<button class="btn btn-primary" id="askAgent" data-i18n="ask_btn">بپرس</button>
+</div>
+<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+<button class="btn btn-ghost agent-ex" data-i18n="agent_ex1">وضعیت خشکسالی در شیراز</button>
+<button class="btn btn-ghost agent-ex" data-i18n="agent_ex2">آیا در اصفهان امواج گرما داریم؟</button>
+<button class="btn btn-ghost agent-ex" data-i18n="agent_ex3">توصیه برای گندم در مشهد</button>
+<button class="btn btn-ghost agent-ex" data-i18n="agent_ex4">تولید جهانی گندم چقدر است؟</button>
+</div>
+<div id="agentStatus" class="status" aria-live="polite"></div>
+</div>
+<div id="agentResult"></div>
+</section>
+<section id="tab-fao" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2 data-i18n="fao_center_title">مرکز داده کشاورزی FAOSTAT</h2>
+<p data-i18n="fao_center_desc">آمار رسمی سالانه ایران؛ مستقل از داده‌های اقلیمی NASA.</p>
+</div>
+<span class="pill">FAOSTAT · QCL</span>
+</div>
+<div class="panel">
+<div class="form-grid">
+<label>
+<span data-i18n="crop_lbl">محصول</span>
+<select id="faoCrop">
+<option value="wheat" data-i18n="fao_wheat">گندم</option>
+<option value="barley" data-i18n="fao_barley">جو</option>
+<option value="rice" data-i18n="fao_rice">برنج (شلتوک)</option>
+<option value="maize" data-i18n="fao_maize">ذرت دانه‌ای</option>
+<option value="potato" data-i18n="fao_potato">سیب‌زمینی</option>
+<option value="tomato" data-i18n="fao_tomato">گوجه‌فرنگی</option>
+<option value="sugarbeet" data-i18n="fao_sugarbeet">چغندرقند</option>
+<option value="dates" data-i18n="fao_dates">خرما</option>
+<option value="pistachio" data-i18n="fao_pistachio">پسته</option>
+</select>
+</label>
+<label>
+<span data-i18n="metric_lbl">شاخص</span>
+<select id="faoMetric">
+<option value="production" data-i18n="fao_production">تولید (تن)</option>
+<option value="area" data-i18n="fao_area">سطح برداشت (هکتار)</option>
+<option value="yield" data-i18n="fao_yield">عملکرد (تن/هکتار)</option>
+</select>
+</label>
+</div>
+<div class="button-row" style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+<button class="btn btn-primary" id="loadFao" data-i18n="load_fao">دریافت داده رسمی FAO</button>
+<button class="btn btn-ghost" id="refreshFao" data-i18n="fao_refresh">به‌روزرسانی اجباری</button>
+<button class="btn btn-ghost" id="exportFao" disabled>CSV ↓</button>
+</div>
+<div id="faoStatus" class="status" aria-live="polite" data-i18n="fao_ready">برای دریافت آمار، محصول را انتخاب و دکمه دریافت را بزنید.</div>
+</div>
+<div id="faoSummary" class="stats-grid"></div>
+<div class="panel chart-panel">
+<div class="panel-title">
+<div>
+<h3 id="faoTitle" data-i18n="fao_trend_title">روند سالانه محصول</h3>
+<p id="faoMeta" data-i18n="fao_meta_default">منبع: FAOSTAT · دامنه QCL · ایران</p>
+</div>
+</div>
+<div class="chart-wrap">
+<canvas id="faoChart" role="img" aria-label="نمودار روند سالانه محصول"></canvas>
+</div>
+<div id="faoTable" class="analysis-grid"></div>
+</div>
+<div class="panel">
+<div class="panel-title">
+<div>
+<h3 data-i18n="fao_world_title">🌍 مقایسه جهانی</h3>
+<p data-i18n="fao_world_desc">رتبه‌بندی کشورها از داده واقعی FAOSTAT — رتبه‌ها از پاسخ زنده محاسبه می‌شوند، بدون کد کشور ثابت.</p>
+</div>
+<span class="tiny-tag">FAOSTAT · QCL · WORLD</span>
+</div>
+<div class="button-row" style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+<button class="btn btn-primary" id="loadFaoWorld" data-i18n="fao_world_btn">دریافت رتبه‌بندی جهانی</button>
+<select id="faoWorldMetric" style="padding:8px 12px;border-radius:8px;border:1px solid var(--line);background:var(--white);color:var(--ink)">
+<option value="production" data-i18n="w_production">تولید</option>
+<option value="area" data-i18n="w_area">سطح برداشت</option>
+<option value="yield" data-i18n="w_yield">عملکرد</option>
+</select>
+</div>
+<div id="faoWorldStatus" class="status" aria-live="polite"></div>
+</div>
+<div id="faoWorldResult"></div>
+<div class="notice">
+<b data-i18n="fao_note_title">نکته روش‌شناسی</b>
+<p data-i18n="fao_note">این بخش فقط داده رسمی دریافت‌شده از FAOSTAT را نمایش می‌دهد. اگر API در دسترس نباشد، داده ساختگی جایگزین نمی‌شود. عملکرد FAOSTAT که بر حسب هکتوگرم بر هکتار ارائه شود، به تن بر هکتار تبدیل می‌شود.</p>
+<p>
+<a href="https://www.fao.org/faostat/en/#data/QCL" target="_blank" rel="noopener">منبع رسمی FAOSTAT QCL ↗</a>
+</p>
+</div>
+</section>
+<section id="tab-power" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2>NASA POWER</h2>
+<p data-i18n="power_page_desc">داده‌های خورشیدی و هواشناسی آماده تحلیل.</p>
+</div>
+</div>
+<div class="panel">
+<p data-i18n="power_explain">POWER سرویس داده‌ای ناسا برای پارامترهای خورشیدی و هواشناسی است. پوشش زمانی و مکانی و واحدها به پارامتر انتخابی بستگی دارد.</p>
+<p>
+<a target="_blank" rel="noopener" href="https://power.larc.nasa.gov/docs/services/api/">NASA POWER API Documentation ↗</a>
+</p>
+<button class="btn btn-primary" data-go="overview" data-i18n="open_tool">رفتن به ابزار دریافت داده</button>
+</div>
+<div class="panel">
+<h3 data-i18n="param_dictionary">فرهنگ پارامترهای پشتیبانی‌شده در این نسخه</h3>
+<div id="parameterList" class="parameter-grid"></div>
+</div>
+</section>
+<section id="tab-catalog" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2 data-i18n="catalog_title">کاوشگر کاتالوگ NASA Earthdata</h2>
+<p data-i18n="catalog_desc">مجموعه‌داده‌های SMAP، MODIS و سایر مأموریت‌ها را در CMR پیدا کنید.</p>
+</div>
+<span class="pill">CMR API</span>
+</div>
+<div class="panel">
+<div class="search-row">
+<input id="catalogQuery" placeholder="مثلاً SMAP soil moisture یا MOD13Q1" data-i18n-placeholder="cat_q_ph">
+<input id="provider" placeholder="Provider (optional)">
+<button class="btn btn-primary" id="searchCatalog" data-i18n="search">جست‌وجو</button>
+</div>
+<div class="form-grid compact">
+<label>
+<span data-i18n="from_optional">از تاریخ (اختیاری)</span>
+<input id="catStart" type="date"></label>
+<label>
+<span data-i18n="to_optional">تا تاریخ (اختیاری)</span>
+<input id="catEnd" type="date"></label>
+</div>
+<label class="field-label" data-i18n="bbox_label">کادر مکانی (اختیاری: غرب،جنوب،شرق،شمال)</label>
+<input id="bbox" placeholder="مثلاً 44,25,63,40">
+<div class="quick-searches">
+<button class="btn btn-ghost" data-query="SMAP soil moisture">SMAP · Soil moisture</button>
+<button class="btn btn-ghost" data-query="MOD13Q1 NDVI EVI">MODIS · NDVI / EVI</button>
+<button class="btn btn-ghost" data-query="MOD11A2 land surface temperature">MODIS · Land temperature</button>
+<button class="btn btn-ghost" data-query="GPM precipitation">GPM · Precipitation</button>
+<button class="btn btn-ghost" data-query="SPL3SMP_E">SMAP · SPL3SMP_E</button>
+<button class="btn btn-ghost" data-query="SPL4SMGP">SMAP · SPL4SMGP</button>
+<button class="btn btn-ghost" data-query="MCD12Q1">MODIS · MCD12Q1</button>
+<button class="btn btn-ghost" data-query="MCD64A1">MODIS · MCD64A1</button>
+<button class="btn btn-ghost" data-query="MOD14A2">MODIS · MOD14A2</button>
+<button class="btn btn-ghost" data-query="MCD18C1">MODIS · MCD18C1 v062</button>
+</div>
+<div id="catalogStatus" class="status"></div>
+<div id="catalogResults" class="catalog-results"></div>
+<div class="pager">
+<button id="prevPage" class="btn btn-ghost" disabled>←</button>
+<span id="pageLabel">1</span>
+<button id="nextPage" class="btn btn-ghost" disabled>→</button>
+</div>
+</div>
+<div class="notice">
+<b data-i18n="catalog_notice_title">تفاوت Collection و Granule</b>
+<p data-i18n="catalog_notice">Collection مشخصات یک محصول داده را توصیف می‌کند؛ Granule یک فایل یا قطعه داده مشخص است. برای دانلود باید گرانول را انتخاب کنید و ممکن است ورود Earthdata لازم باشد.</p>
+</div>
+</section>
+<section id="tab-advisor" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2 data-i18n="advisor_title">💡 مشاور هوشمند کشاورز</h2>
+<p data-i18n="advisor_desc">تحلیل خودکار داده‌های واقعی هوا (NASA POWER) و آمار کشاورزی (FAOSTAT) و پیشنهاد عملی برای شما — به زبان ساده.</p>
+</div>
+<span class="pill">DECISION SUPPORT</span>
+</div>
+<div class="panel">
+<div class="form-grid">
+<label>
+<span data-i18n="adv_crop_lbl">🌾 محصول شما</span>
+<select id="advCrop"></select>
+</label>
+<label style="flex:2">
+<span data-i18n="adv_loc_lbl">📍 موقعیت مزرعه</span>
+<div class="coord-row" style="margin:0">
+<span id="advLocation" style="font-size:13px;color:var(--muted)" data-i18n="adv_loc_hint">روی نقشه در تب «نمای کلی» کلیک کنید یا مختصات را وارد کنید</span>
+<button class="btn btn-ghost" id="advUseMap" type="button" data-i18n="clim_use_map">استفاده از مختصات نقشه</button>
+</div>
+</label>
+</div>
+<div class="button-row" style="margin-top:14px">
+<button class="btn btn-primary" id="runAdvice" data-i18n="run_advice">🔍 تحلیل کن و پیشنهاد بگیر</button>
+</div>
+<div id="advStatus" class="status" aria-live="polite" data-i18n="adv_ready">محصول را انتخاب کنید و دکمه تحلیل را بزنید.</div>
+</div>
+<div id="advResult"></div>
+<div class="notice">
+<b data-i18n="advisor_how_title">چطور کار می‌کند؟</b>
+<p data-i18n="advisor_how">این بخش ۳۰ روز گذشته داده‌های هوا (دما، باران، رطوبت، تابش، تبخیر) را از NASA POWER برای مختصات مزرعه شما می‌گیرد و روند تولید و عملکرد محصول را از آمار رسمی FAOSTAT بررسی می‌کند؛ سپس با قوانین ساده کشاورزی، پیشنهادهای عملی به زبان ساده می‌دهد. هر پیشنهاد منبع داده خود را نشان می‌دهد.</p>
+</div>
+</section>
+<section id="tab-faq" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2 data-i18n="faq_title">دانشنامه داده‌های ناسا</h2>
+<p data-i18n="faq_desc">پاسخ‌های کاربردی درباره منابع، محصولات، کیفیت و روش تفسیر داده‌ها.</p>
+</div>
+</div>
+<div class="panel">
+<input id="faqSearch" class="faq-search" placeholder="جست‌وجو در پرسش‌ها و پاسخ‌ها..." data-i18n-placeholder="faq_search_ph">
+<div id="faqResults" class="faq-list"></div>
+</div>
+</section>
+<section id="tab-workspace" class="tab-panel hidden">
+<div class="section-head">
+<div>
+<h2 data-i18n="ws_title">فضای کاری علمی</h2>
+<p data-i18n="ws_desc">ذخیره، بازتولید و خروجی تحلیل‌های علمی با متادیتای کامل.</p>
+</div>
+<span class="pill">Phase 5</span>
+</div>
+
+<div class="panel">
+<h3 data-i18n="ws_save_title">ذخیره تحلیل فعلی</h3>
+<div class="form-grid compact">
+<label><span data-i18n="ws_name">نام تحلیل</span><input id="wsTitle" placeholder="مثلاً POWER Tehran Jan 2025" data-i18n-placeholder="ws_title_ph"></label>
+<label><span data-i18n="ws_type">نوع</span><select id="wsType"><option value="power">POWER</option><option value="timeseries">Time Series</option><option value="catalog">CMR Catalog</option><option value="compare">Satellite Compare</option><option value="custom">Custom</option></select></label>
+<label class="full"><button class="btn btn-primary" id="wsSave" data-i18n="ws_save">ذخیره تحلیل</button></label>
+</div>
+<div id="wsSaveStatus" class="status"></div>
+</div>
+
+<div class="panel">
+<h3 data-i18n="ws_list_title">تحلیل‌های ذخیره‌شده</h3>
+<div id="wsList" class="analysis-grid"></div>
+</div>
+
+<div class="panel">
+<h3 data-i18n="ws_ts_title">سری زمانی اقلیمی</h3>
+<div class="form-grid compact">
+<label><span data-i18n="lat">عرض</span><input id="tsLat" type="number" step="0.01" value="35.7"></label>
+<label><span data-i18n="lon">طول</span><input id="tsLon" type="number" step="0.01" value="51.4"></label>
+<label><span data-i18n="from">از</span><input id="tsStart" type="date"></label>
+<label><span data-i18n="to">تا</span><input id="tsEnd" type="date"></label>
+<label class="full"><span data-i18n="ws_params">پارامترها</span><input id="tsParams" value="T2M,PRECTOT,ALLSKY_SFC_SW_DWN,WS10M"></label>
+<label><span data-i18n="ws_baseline">دوره پایه (اختیاری)</span><input id="tsBaseline" placeholder="مثلاً 2015-01-01,2015-12-31" data-i18n-placeholder="ws_baseline_ph"></label>
+<label class="full"><button class="btn btn-primary" id="tsRun" data-i18n="ws_run">اجرای سری زمانی</button></label>
+</div>
+<div id="tsResult"></div>
+</div>
+</section>
+
+<footer>
+<span>NASA Unified Earth & Climate Observatory</span>
+<span>Sources: 
+<a href="https://power.larc.nasa.gov/" target="_blank" rel="noopener">POWER</a>
+ · 
+<a href="https://cmr.earthdata.nasa.gov/search/site/docs/search/api.html" target="_blank" rel="noopener">CMR</a>
+ · 
+<a href="https://earthdata.nasa.gov/" target="_blank" rel="noopener">Earthdata</a>
+</span>
+</footer>
+</main>
+</div>
+<div id="toast" class="toast" role="status"></div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script><script src="{% static 'core/app.js' %}?v=23"></script>
+<script src="{% static 'core/workspace.js' %}?v=2"></script><noscript>
+<div style="padding:20px;text-align:center;font-family:sans-serif" data-i18n="noscript_msg">برای استفاده از این سامانه جاوااسکریپت باید فعال باشد.</div>
+</noscript></body></html>

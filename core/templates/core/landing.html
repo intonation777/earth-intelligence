@@ -1,0 +1,402 @@
+{% load static %}
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#10243A">
+<meta name="description" content="An integrated platform for Earth observation, environmental intelligence, climate analysis, and data-driven agriculture." data-i18n-content="meta_description">
+<title>Earth Intelligence Platform | Earth Observation & Smart Agriculture</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'core/landing.css' %}?v=1">
+<script src="{% static 'core/landing.js' %}?v=2" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-i18n="skip_to_content">Skip to main content</a>
+
+<header class="site-header">
+  <div class="container nav-inner">
+    <a class="brand" href="{% url 'landing' %}" aria-label="Earth Intelligence Platform" data-i18n-aria="brand_aria">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="8.2"/>
+          <path d="M3.8 12h16.4"/>
+          <path d="M12 3.8c2.4 2.2 2.4 13.8 0 16.4"/>
+          <path d="M12 3.8c-2.4 2.2-2.4 13.8 0 16.4"/>
+        </svg>
+      </span>
+      <span class="brand-copy">
+        <span class="brand-name" data-i18n="brand_name">Earth Intelligence</span>
+        <span class="brand-sub" data-i18n="brand_sub">Earth Observation × Smart Agriculture</span>
+      </span>
+    </a>
+
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="siteNav" data-i18n-aria="nav_toggle" aria-label="Open navigation menu">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+        <path d="M4 7h16M4 12h16M4 17h16"/>
+      </svg>
+    </button>
+
+    <nav class="site-nav" id="siteNav" aria-label="Primary navigation" data-i18n-aria="nav_label">
+      <a href="{% url 'landing' %}" data-nav="home" data-i18n="nav_home">Home</a>
+      <a href="#platform" data-nav="platform" data-i18n="nav_platform">Platform</a>
+      <a href="{% url 'dashboard' %}" data-i18n="nav_earth">Earth Intelligence</a>
+      <a href="{% url 'farmer_dashboard' %}" data-i18n="nav_farmer">Farmer Assistant</a>
+      <a href="#data" data-nav="data" data-i18n="nav_data">Data &amp; Methodology</a>
+      <a href="#about" data-nav="about" data-i18n="nav_about">About</a>
+      <a class="mobile-cta btn btn-secondary" href="{% url 'farmer_dashboard' %}" data-i18n="nav_signin">Sign in / Register</a>
+      <a class="mobile-cta btn btn-primary" href="#platform" data-i18n="nav_cta">Explore Platform</a>
+    </nav>
+
+    <div class="nav-actions">
+      <div class="lang-switch" role="group" data-i18n-aria="language_switch" aria-label="Language selector">
+        <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button>
+        <button class="lang-btn" type="button" data-lang="fa" aria-pressed="false">FA</button>
+      </div>
+      <a class="btn btn-secondary btn-nav" href="{% url 'farmer_dashboard' %}" data-i18n="nav_signin">Sign in / Register</a>
+      <a class="btn btn-primary btn-nav" href="#platform" data-i18n="nav_cta">Explore Platform</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- A. Hero -->
+  <section class="hero" aria-labelledby="heroTitle">
+    <div class="hero-media">
+      <picture>
+        <source srcset="{% static 'shared/images/landing/hero-earth.webp' %}" type="image/webp">
+        <img class="hero-img" src="{% static 'shared/images/landing/hero-earth.jpg' %}" alt="Earth from orbit representing Earth observation and climate intelligence" width="548" height="465" fetchpriority="high" decoding="async" data-i18n-alt="hero_img_alt">
+      </picture>
+    </div>
+    <div class="hero-overlay" aria-hidden="true"></div>
+    <div class="container hero-content">
+      <p class="eyebrow" data-i18n="hero_eyebrow">EARTH OBSERVATION • CLIMATE INTELLIGENCE • SMART AGRICULTURE</p>
+      <h1 id="heroTitle" data-i18n="hero_title">Understand Earth. Make Better Decisions.</h1>
+      <p class="hero-desc" data-i18n="hero_desc">An integrated platform for Earth observation, environmental intelligence, climate analysis, and data-driven agriculture.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary btn-lg" href="{% url 'dashboard' %}" data-i18n="hero_cta_primary">Explore Earth Intelligence</a>
+        <a class="btn btn-secondary btn-lg" href="{% url 'farmer_dashboard' %}" data-i18n="hero_cta_secondary">Discover Farmer Assistant</a>
+      </div>
+      <div class="hero-note" aria-hidden="true">
+        <span data-i18n="hero_note_1">Earth observation</span>
+        <span data-i18n="hero_note_2">Climate intelligence</span>
+        <span data-i18n="hero_note_3">Smart agriculture</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- C. Platform introduction -->
+  <section class="section platform" id="platform" aria-labelledby="platformTitle">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow" data-i18n="platform_eyebrow">One platform</p>
+        <h2 id="platformTitle" data-i18n="platform_title">One Platform. Two Powerful Experiences.</h2>
+        <p data-i18n="platform_desc">From global environmental intelligence to practical agricultural decisions, explore two connected experiences designed to turn Earth data into meaningful insights.</p>
+      </div>
+
+      <div class="product-grid">
+        <article class="product-card earth">
+          <div class="product-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/earth-intelligence.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/earth-intelligence.jpg' %}" alt="Earth Intelligence satellite and climate analysis workspace" width="546" height="465" loading="lazy" decoding="async" data-i18n-alt="earth_img_alt">
+            </picture>
+            <span class="product-tag" data-i18n="earth_tag">Scientific workspace</span>
+          </div>
+          <div class="product-body">
+            <h3 data-i18n="earth_title">Earth Intelligence</h3>
+            <p data-i18n="earth_desc">Explore satellite imagery, climate indicators, environmental conditions, and geospatial information through an integrated scientific workspace.</p>
+            <ul class="feature-list">
+              <li data-i18n="earth_feature_1">Satellite Observation</li>
+              <li data-i18n="earth_feature_2">Climate Monitoring</li>
+              <li data-i18n="earth_feature_3">Geospatial Analysis</li>
+            </ul>
+            <a class="btn btn-primary" href="{% url 'dashboard' %}" data-i18n="earth_cta">Explore Earth Intelligence</a>
+          </div>
+        </article>
+
+        <article class="product-card farmer">
+          <div class="product-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/farmer-assistant.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/farmer-assistant.jpg' %}" alt="Farmer Assistant agricultural decision support interface" width="569" height="465" loading="lazy" decoding="async" data-i18n-alt="farmer_img_alt">
+            </picture>
+            <span class="product-tag" data-i18n="farmer_tag">Decision support</span>
+          </div>
+          <div class="product-body">
+            <h3 data-i18n="farmer_title">Farmer Assistant</h3>
+            <p data-i18n="farmer_desc">Make informed agricultural decisions with field-aware insights, crop monitoring, irrigation guidance, and agricultural risk assessment.</p>
+            <ul class="feature-list">
+              <li data-i18n="farmer_feature_1">Crop Management</li>
+              <li data-i18n="farmer_feature_2">Irrigation Guidance</li>
+              <li data-i18n="farmer_feature_3">Agricultural Risk Insights</li>
+            </ul>
+            <a class="btn btn-green" href="{% url 'farmer_dashboard' %}" data-i18n="farmer_cta">Open Farmer Assistant</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- D. Core capabilities -->
+  <section class="section capabilities" aria-labelledby="capabilitiesTitle">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow" data-i18n="capabilities_eyebrow">Capabilities</p>
+        <h2 id="capabilitiesTitle" data-i18n="capabilities_title">Explore the Capabilities</h2>
+        <p data-i18n="capabilities_desc">A shared scientific foundation connects environmental monitoring with practical farm-level decision support.</p>
+      </div>
+
+      <div class="capability-grid">
+        <article class="capability-card">
+          <div class="capability-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/earth-intelligence.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/earth-intelligence.jpg' %}" alt="Satellite observation and Earth imagery" width="546" height="465" loading="lazy" decoding="async" data-i18n-alt="cap1_img_alt">
+            </picture>
+            <span class="capability-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 18 18 6"/><path d="M6 16l3 3"/><path d="M15 7l2-2 3 3-2 2"/><circle cx="12" cy="12" r="2"/></svg>
+            </span>
+          </div>
+          <div class="capability-body">
+            <h3 data-i18n="cap1_title">Satellite &amp; Earth Observation</h3>
+            <p data-i18n="cap1_desc">Review satellite context layers and discover Earth observation collections through the scientific workspace.</p>
+          </div>
+        </article>
+
+        <article class="capability-card">
+          <div class="capability-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/climate-monitoring.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/climate-monitoring.jpg' %}" alt="Climate monitoring charts and environmental indicators" width="548" height="470" loading="lazy" decoding="async" data-i18n-alt="cap2_img_alt">
+            </picture>
+            <span class="capability-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+            </span>
+          </div>
+          <div class="capability-body">
+            <h3 data-i18n="cap2_title">Climate Monitoring</h3>
+            <p data-i18n="cap2_desc">Explore temperature, precipitation, radiation, humidity, drought indicators, and climate time series.</p>
+          </div>
+        </article>
+
+        <article class="capability-card">
+          <div class="capability-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/smart-agriculture.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/smart-agriculture.jpg' %}" alt="Smart agriculture crop planning and farm management" width="569" height="470" loading="lazy" decoding="async" data-i18n-alt="cap3_img_alt">
+            </picture>
+            <span class="capability-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 9 12 4 20 4c0 8-5 15-15 15Z"/><path d="M5 19c3-5 7-8 11-9"/></svg>
+            </span>
+          </div>
+          <div class="capability-body">
+            <h3 data-i18n="cap3_title">Agricultural Intelligence</h3>
+            <p data-i18n="cap3_desc">Translate environmental and field data into crop recommendations, lifecycle guidance, and farm planning support.</p>
+          </div>
+        </article>
+
+        <article class="capability-card">
+          <div class="capability-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/farmer-assistant.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/farmer-assistant.jpg' %}" alt="Crop and water management for irrigation decisions" width="569" height="465" loading="lazy" decoding="async" data-i18n-alt="cap4_img_alt">
+            </picture>
+            <span class="capability-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s6 6.5 6 11a6 6 0 1 1-12 0c0-4.5 6-11 6-11Z"/></svg>
+            </span>
+          </div>
+          <div class="capability-body">
+            <h3 data-i18n="cap4_title">Crop &amp; Water Management</h3>
+            <p data-i18n="cap4_desc">Support irrigation planning, water requirement estimates, crop cycles, and field-level management records.</p>
+          </div>
+        </article>
+
+        <article class="capability-card">
+          <div class="capability-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/climate-monitoring.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/climate-monitoring.jpg' %}" alt="Environmental risk analysis and early warning indicators" width="548" height="470" loading="lazy" decoding="async" data-i18n-alt="cap5_img_alt">
+            </picture>
+            <span class="capability-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3Z"/><path d="M12 8v4M12 16h.01"/></svg>
+            </span>
+          </div>
+          <div class="capability-body">
+            <h3 data-i18n="cap5_title">Environmental Risk Analysis</h3>
+            <p data-i18n="cap5_desc">Assess drought, heat stress, frost, and agricultural risk signals using available climate indicators.</p>
+          </div>
+        </article>
+
+        <article class="capability-card">
+          <div class="capability-media">
+            <picture>
+              <source srcset="{% static 'shared/images/landing/data-analysis.webp' %}" type="image/webp">
+              <img src="{% static 'shared/images/landing/data-analysis.jpg' %}" alt="Geospatial data analysis and map-based exploration" width="546" height="470" loading="lazy" decoding="async" data-i18n-alt="cap6_img_alt">
+            </picture>
+            <span class="capability-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+            </span>
+          </div>
+          <div class="capability-body">
+            <h3 data-i18n="cap6_title">Geospatial Data Analysis</h3>
+            <p data-i18n="cap6_desc">Work with coordinates, map layers, catalog discovery, and downloadable granule workflows where supported.</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- E. Data sources -->
+  <section class="section data-sources" id="data" aria-labelledby="dataTitle">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow" data-i18n="data_eyebrow">Scientific foundation</p>
+        <h2 id="dataTitle" data-i18n="data_title">Built on Earth Observation and Scientific Data</h2>
+        <p data-i18n="data_desc">The platform is designed around real scientific sources, with clear distinctions between visual satellite layers, catalog metadata, and numerical environmental data.</p>
+      </div>
+
+      <div class="source-grid">
+        <article class="source-card">
+          <div class="source-top">
+            <span class="source-name">NASA POWER</span>
+            <span class="source-type" data-i18n="source_power_type">Numerical data</span>
+          </div>
+          <p data-i18n="source_power_desc">Point-based meteorological and solar parameters used for climate indicators, agricultural calculations, and analysis-ready time series.</p>
+        </article>
+        <article class="source-card">
+          <div class="source-top">
+            <span class="source-name">NASA Earthdata / CMR</span>
+            <span class="source-type" data-i18n="source_cmr_type">Catalog metadata</span>
+          </div>
+          <p data-i18n="source_cmr_desc">Collection and granule discovery through the Common Metadata Repository; results describe available data products and links.</p>
+        </article>
+        <article class="source-card">
+          <div class="source-top">
+            <span class="source-name">NASA GIBS</span>
+            <span class="source-type" data-i18n="source_gibs_type">Visual layers</span>
+          </div>
+          <p data-i18n="source_gibs_desc">Satellite imagery rendered as map tiles for visual context such as true color, vegetation indices, land surface temperature, and soil moisture.</p>
+        </article>
+        <article class="source-card">
+          <div class="source-top">
+            <span class="source-name">FAOSTAT</span>
+            <span class="source-type" data-i18n="source_fao_type">Official statistics</span>
+          </div>
+          <p data-i18n="source_fao_desc">Food and Agriculture Organization statistical data for crop production, yield, area, and related agricultural indicators.</p>
+        </article>
+      </div>
+
+      <div class="data-note">
+        <b data-i18n="data_note_title">Honest data boundaries:</b>
+        <span data-i18n="data_note">GIBS layers provide visual satellite context rather than raw analysis-ready measurements. CMR responses are catalog metadata and download links, not proof that every dataset has been downloaded or processed. Numerical climate and agricultural outputs are limited to the services and parameters actually implemented.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- F. How it works -->
+  <section class="section process" aria-labelledby="processTitle">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow" data-i18n="process_eyebrow">Workflow</p>
+        <h2 id="processTitle" data-i18n="process_title">From Earth Data to Better Decisions</h2>
+      </div>
+      <div class="process-grid">
+        <article class="process-step">
+          <div class="step-number" aria-hidden="true">01</div>
+          <h3 data-i18n="step1_title">Data Collection</h3>
+          <p data-i18n="step1_desc">Gather Earth observation and environmental datasets from the available scientific services.</p>
+        </article>
+        <article class="process-step">
+          <div class="step-number" aria-hidden="true">02</div>
+          <h3 data-i18n="step2_title">Analysis</h3>
+          <p data-i18n="step2_desc">Process climate and agricultural information using the implemented analytical services and engines.</p>
+        </article>
+        <article class="process-step">
+          <div class="step-number" aria-hidden="true">03</div>
+          <h3 data-i18n="step3_title">Insights</h3>
+          <p data-i18n="step3_desc">Generate meaningful indicators, assessments, warnings, and recommendations where data supports them.</p>
+        </article>
+        <article class="process-step">
+          <div class="step-number" aria-hidden="true">04</div>
+          <h3 data-i18n="step4_title">Decisions</h3>
+          <p data-i18n="step4_desc">Support scientific exploration in Earth Intelligence and practical agricultural decisions in Farmer Assistant.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- G. Closing CTA -->
+  <section class="section closing" aria-labelledby="ctaTitle">
+    <div class="container">
+      <div class="cta-panel">
+        <div>
+          <h2 id="ctaTitle" data-i18n="cta_title">Explore a Smarter Way to Understand Our Planet</h2>
+          <p data-i18n="cta_desc">Discover the tools and insights that connect Earth observation with real-world decisions.</p>
+          <div class="cta-actions">
+            <a class="btn btn-primary btn-lg" href="{% url 'dashboard' %}" data-i18n="cta_primary">Explore Earth Intelligence</a>
+            <a class="btn btn-secondary btn-lg" href="{% url 'farmer_dashboard' %}" data-i18n="cta_secondary">Open Farmer Assistant</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- H. Footer / about -->
+<footer class="site-footer" id="about">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="{% url 'landing' %}" aria-label="Earth Intelligence Platform" data-i18n-aria="brand_aria">
+          <span class="brand-mark" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="8.2"/>
+              <path d="M3.8 12h16.4"/>
+              <path d="M12 3.8c2.4 2.2 2.4 13.8 0 16.4"/>
+              <path d="M12 3.8c-2.4 2.2-2.4 13.8 0 16.4"/>
+            </svg>
+          </span>
+          <span class="brand-copy">
+            <span class="brand-name" data-i18n="brand_name">Earth Intelligence</span>
+            <span class="brand-sub" data-i18n="brand_sub">Earth Observation × Smart Agriculture</span>
+          </span>
+        </a>
+        <p data-i18n="footer_overview">A unified platform connecting Earth observation, climate intelligence, environmental analysis, and data-driven agriculture.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_products_title">Products</h4>
+        <ul>
+          <li><a href="{% url 'dashboard' %}" data-i18n="footer_earth">Earth Intelligence</a></li>
+          <li><a href="{% url 'farmer_dashboard' %}" data-i18n="footer_farmer">Farmer Assistant</a></li>
+          <li><a href="#platform" data-i18n="footer_platform">Platform overview</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_resources_title">Resources</h4>
+        <ul>
+          <li><a href="#data" data-i18n="footer_data">Data sources &amp; methodology</a></li>
+          <li><a href="{% url 'landing' %}" data-i18n="footer_home">Home</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4 data-i18n="footer_language_title">Language</h4>
+        <div class="lang-switch" role="group" data-i18n-aria="language_switch_footer" aria-label="Language selector">
+          <button class="lang-btn active" type="button" data-lang="en" aria-pressed="true">EN</button>
+          <button class="lang-btn" type="button" data-lang="fa" aria-pressed="false">FA</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span data-i18n="footer_rights">© 2026 Earth Intelligence Platform. Scientific data remains subject to source terms and availability.</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
