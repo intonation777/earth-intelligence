@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: nasa-earth-observatory
+    name: earth-intelligence
     runtime: python
     plan: free
     buildCommand: ./build.sh
@@ -18,7 +18,7 @@ services:
         value: "1"
       - key: DATABASE_URL
         fromDatabase:
-          name: nasa-earth-db
+          name: earth-intel-db
           property: connectionString
       - key: NASA_EARTHDATA_TOKEN
         sync: false
@@ -32,7 +32,7 @@ services:
         value: "30"
 
 databases:
-  - name: nasa-earth-db
+  - name: earth-intel-db
     plan: free
-    databaseName: nasa_earth
-    user: nasa_earth
+    databaseName: earth_intel
+    user: earth_intel

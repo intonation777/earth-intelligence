@@ -1,4 +1,4 @@
-# NASA Earth Intelligence Platform
+# Earth Intelligence Platform
 
 **Earth & Climate Observatory + Farmer Assistant** — a bilingual (Persian/English) Django platform that turns NASA Earth-observation data into actionable climate insight and farm-level decision support.
 
@@ -8,7 +8,7 @@ Built for the **NASA International Space Apps Challenge**.
 
 ## Live demo
 
-- Interactive demo: **https://nasa-earth-observatory.onrender.com** (public, no login required — demo mode gives each visitor an isolated sandbox account)
+- Interactive demo: **https://earth-intelligence.onrender.com** (public, no login required — demo mode gives each visitor an isolated sandbox account)
 - Presentation (7 slides): [`docs/demo/earth intelligence platform.pdf`](docs/demo/earth%20intelligence%20platform.pdf)
 - Screenshots: [`docs/screenshots/`](docs/screenshots/)
 

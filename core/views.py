@@ -47,7 +47,7 @@ def health(request):
     else:
         status = 'ok'
     return JsonResponse({'status': status, 'checks': checks,
-                         'application': 'NASA Unified Earth & Climate Observatory',
+                         'application': 'Earth Intelligence Platform',
                          'power': 'configured', 'cmr': 'configured', 'fao': 'configured',
                          'earthdata_auth': 'configured' if settings.NASA_EARTHDATA_TOKEN else 'not_configured'})
 
